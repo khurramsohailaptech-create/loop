@@ -1,0 +1,1177 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>pops</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- SweetAlert2 CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+
+    <!-- Embedded Custom CSS Styling -->
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        :root {
+            --primary-gold: #d4af37;
+            --primary-hover: #f3c63f;
+            --dark-bg: #0d0d0f;
+            --card-bg: #ffffff;
+            --text-dark: #18181b;
+            --text-muted: #64748b;
+            --accent-red: #ef4444;
+            --accent-green: #10b981;
+            --border-color: #e2e8f0;
+        }
+
+        body {
+            background-color: #faf8f5;
+            color: var(--text-dark);
+            overflow-x: hidden;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0d0d0f;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--primary-gold);
+            border-radius: 4px;
+        }
+
+        /* ================= HEADER & NAVBAR ================= */
+        header {
+            background: rgba(13, 13, 15, 0.93);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            color: #ffffff;
+            padding: 16px 6%;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(212, 175, 55, 0.25);
+            box-shadow: 0 4px 25px rgba(0, 0, 0, 0.4);
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo-icon {
+            width: 44px;
+            height: 44px;
+            background: linear-gradient(135deg, var(--primary-gold), #8a6c10);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            box-shadow: 0 0 15px rgba(212, 175, 55, 0.4);
+        }
+
+        .logo span {
+            font-family: 'Playfair Display', serif;
+            font-size: 26px;
+            font-weight: 700;
+            color: var(--primary-gold);
+            letter-spacing: 0.8px;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 32px;
+        }
+
+        .nav-links a {
+            color: #e2e8f0;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 15px;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -6px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary-gold);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary-gold);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+        }
+
+        .clock {
+            color: var(--primary-gold);
+            font-weight: 600;
+            font-size: 13px;
+            background: rgba(212, 175, 55, 0.12);
+            padding: 6px 16px;
+            border-radius: 30px;
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            letter-spacing: 0.8px;
+        }
+
+        .cart-btn {
+            background: linear-gradient(135deg, var(--primary-gold), #b89320);
+            color: #0d0d0f;
+            border: none;
+            padding: 10px 22px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: 700;
+            font-size: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 4px 18px rgba(212, 175, 55, 0.35);
+            transition: all 0.3s ease;
+        }
+
+        .cart-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 24px rgba(212, 175, 55, 0.55);
+            background: linear-gradient(135deg, var(--primary-hover), var(--primary-gold));
+        }
+
+        #cart-count {
+            background: #0d0d0f;
+            color: var(--primary-gold);
+            padding: 2px 9px;
+            border-radius: 50%;
+            font-size: 12px;
+            font-weight: 800;
+        }
+
+        /* ================= HERO SECTION ================= */
+        .hero {
+            background: linear-gradient(rgba(13, 13, 15, 0.78), rgba(13, 13, 15, 0.88)), url('https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?q=80&w=1600') center/cover no-repeat;
+            min-height: 82vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            padding: 60px 20px;
+        }
+
+        .hero-content {
+            max-width: 820px;
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        .small-title {
+            color: var(--primary-gold);
+            font-weight: 600;
+            letter-spacing: 3px;
+            font-size: 14px;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+        }
+
+        .hero h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 60px;
+            margin: 10px 0 20px;
+            line-height: 1.2;
+            font-weight: 800;
+            text-shadow: 0 4px 20px rgba(0,0,0,0.6);
+        }
+
+        .hero p {
+            color: #cbd5e1;
+            font-size: 18px;
+            margin-bottom: 35px;
+            line-height: 1.7;
+            font-weight: 300;
+        }
+
+        .btn-primary {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--primary-gold), #b89320);
+            color: #0d0d0f;
+            padding: 15px 38px;
+            text-decoration: none;
+            border-radius: 30px;
+            font-weight: 700;
+            font-size: 16px;
+            box-shadow: 0 5px 20px rgba(212, 175, 55, 0.4);
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 28px rgba(212, 175, 55, 0.65);
+            background: var(--primary-hover);
+        }
+
+        /* ================= MENU SECTION ================= */
+        .menu-section {
+            padding: 80px 6%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 45px;
+        }
+
+        .section-header h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 42px;
+            margin: 10px 0;
+            color: var(--text-dark);
+            font-weight: 700;
+        }
+
+        .section-header p {
+            color: var(--text-muted);
+            font-size: 16px;
+        }
+
+        /* Category Filters */
+        .category-filters {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            margin-bottom: 45px;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            background: #ffffff;
+            border: 2px solid var(--border-color);
+            padding: 10px 24px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 14px;
+            color: var(--text-dark);
+            transition: all 0.3s ease;
+        }
+
+        .filter-btn:hover, .filter-btn.active {
+            background: var(--primary-gold);
+            border-color: var(--primary-gold);
+            color: #0d0d0f;
+            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);
+        }
+
+        /* Product Grid */
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 32px;
+        }
+
+        .product-card {
+            background: var(--card-bg);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            display: flex;
+            flex-direction: column;
+            border: 1px solid #f1f5f9;
+            transition: all 0.3s ease;
+        }
+
+        .product-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 18px 40px rgba(0,0,0,0.12);
+        }
+
+        .product-img-wrap {
+            position: relative;
+            height: 220px;
+            overflow: hidden;
+        }
+
+        .product-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .product-card:hover img {
+            transform: scale(1.08);
+        }
+
+        .badge-category {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background: rgba(13, 13, 15, 0.85);
+            color: var(--primary-gold);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(212, 175, 55, 0.3);
+        }
+
+        .product-info {
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+
+        .product-info h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 22px;
+            margin-bottom: 10px;
+            color: var(--text-dark);
+            font-weight: 700;
+        }
+
+        .product-info p {
+            color: var(--text-muted);
+            font-size: 14px;
+            line-height: 1.6;
+            margin-bottom: 20px;
+            flex-grow: 1;
+        }
+
+        .product-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 1px solid #f1f5f9;
+            padding-top: 18px;
+        }
+
+        .product-price {
+            font-weight: 700;
+            color: var(--accent-red);
+            font-size: 20px;
+        }
+
+        .btn-add {
+            background: #0d0d0f;
+            color: #ffffff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .btn-add:hover {
+            background: var(--primary-gold);
+            color: #0d0d0f;
+            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.4);
+        }
+
+        /* ================= EXPANDED CART SIDEBAR MODAL ================= */
+        .cart-drawer {
+            position: fixed;
+            top: 0;
+            right: -520px;
+            width: 480px;
+            max-width: 90vw;
+            height: 100vh;
+            background: #ffffff;
+            box-shadow: -12px 0 40px rgba(0,0,0,0.25);
+            transition: right 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            z-index: 2000;
+            display: flex;
+            flex-direction: column;
+            padding: 30px;
+        }
+
+        .cart-drawer.open {
+            right: 0;
+        }
+
+        .cart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid #f1f5f9;
+            padding-bottom: 18px;
+        }
+
+        .cart-header-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .cart-header h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 26px;
+            color: #0d0d0f;
+            font-weight: 700;
+        }
+
+        .drawer-close {
+            background: #f1f5f9;
+            border: none;
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            font-size: 22px;
+            cursor: pointer;
+            color: #475569;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+        }
+
+        .drawer-close:hover {
+            background: var(--accent-red);
+            color: #ffffff;
+        }
+
+        .cart-items {
+            flex-grow: 1;
+            overflow-y: auto;
+            margin: 20px 0;
+            padding-right: 5px;
+        }
+
+        .cart-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 18px;
+            background: #faf8f5;
+            padding: 12px;
+            border-radius: 14px;
+            border: 1px solid #eaeaea;
+            transition: all 0.2s ease;
+        }
+
+        .cart-item img {
+            width: 75px;
+            height: 75px;
+            object-fit: cover;
+            border-radius: 10px;
+        }
+
+        .cart-item-details {
+            flex-grow: 1;
+        }
+
+        .cart-item-details h4 {
+            font-size: 15px;
+            color: #0d0d0f;
+            margin-bottom: 4px;
+            font-weight: 600;
+        }
+
+        .cart-item-price {
+            font-size: 14px;
+            color: var(--accent-red);
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        /* Quantity Controls */
+        .qty-controls {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 2px 6px;
+            width: fit-content;
+        }
+
+        .qty-btn {
+            background: none;
+            border: none;
+            font-size: 16px;
+            font-weight: bold;
+            width: 24px;
+            height: 24px;
+            cursor: pointer;
+            color: #333333;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 4px;
+            transition: background 0.2s;
+        }
+
+        .qty-btn:hover {
+            background: #f1f5f9;
+        }
+
+        .qty-value {
+            font-size: 14px;
+            font-weight: 600;
+            min-width: 20px;
+            text-align: center;
+        }
+
+        .remove-item {
+            background: #fee2e2;
+            color: var(--accent-red);
+            border: none;
+            border-radius: 10px;
+            width: 34px;
+            height: 34px;
+            cursor: pointer;
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+        }
+
+        .remove-item:hover {
+            background: var(--accent-red);
+            color: #ffffff;
+        }
+
+        /* Cart Summary Box */
+        .cart-summary {
+            border-top: 2px solid #f1f5f9;
+            padding-top: 20px;
+            background: #ffffff;
+        }
+
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            font-size: 14px;
+            color: #64748b;
+        }
+
+        .summary-row.grand-total {
+            font-size: 20px;
+            font-weight: 800;
+            color: #0d0d0f;
+            border-top: 2px dashed #e2e8f0;
+            padding-top: 12px;
+            margin-top: 10px;
+        }
+
+        .checkout-button {
+            width: 100%;
+            background: linear-gradient(135deg, var(--accent-green), #059669);
+            color: white;
+            border: none;
+            padding: 16px;
+            font-size: 16px;
+            font-weight: 700;
+            border-radius: 12px;
+            cursor: pointer;
+            margin-top: 18px;
+            box-shadow: 0 5px 20px rgba(16, 185, 129, 0.35);
+            transition: all 0.3s ease;
+        }
+
+        .checkout-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(16, 185, 129, 0.5);
+        }
+
+        .drawer-backdrop {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.65);
+            backdrop-filter: blur(4px);
+            display: none;
+            z-index: 1500;
+        }
+
+        .drawer-backdrop.open {
+            display: block;
+        }
+
+        .empty-cart-view {
+            text-align: center;
+            padding: 60px 20px;
+        }
+
+        .empty-cart-icon {
+            font-size: 60px;
+            margin-bottom: 15px;
+            color: #cbd5e1;
+        }
+
+        /* ================= FOOTER ================= */
+        footer {
+            background: #0d0d0f;
+            color: #ffffff;
+            padding: 70px 6% 30px;
+            margin-top: 80px;
+            border-top: 2px solid rgba(212, 175, 55, 0.3);
+        }
+
+        .footer-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            max-width: 1400px;
+            margin: 0 auto;
+            border-bottom: 1px solid #222225;
+            padding-bottom: 50px;
+        }
+
+        .footer-col h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 22px;
+            color: var(--primary-gold);
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+
+        .footer-col p {
+            color: #94a3b8;
+            font-size: 14px;
+            line-height: 1.7;
+            margin-bottom: 15px;
+        }
+
+        .footer-col ul {
+            list-style: none;
+        }
+
+        .footer-col ul li {
+            margin-bottom: 12px;
+        }
+
+        .footer-col ul li a {
+            color: #94a3b8;
+            text-decoration: none;
+            transition: color 0.2s;
+            font-size: 14px;
+        }
+
+        .footer-col ul li a:hover {
+            color: var(--primary-gold);
+        }
+
+        .newsletter-form {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .newsletter-form input {
+            flex-grow: 1;
+            padding: 12px 16px;
+            border-radius: 8px;
+            border: 1px solid #222225;
+            background: #18181b;
+            color: #ffffff;
+            outline: none;
+            font-size: 14px;
+        }
+
+        .newsletter-form button {
+            background: var(--primary-gold);
+            border: none;
+            padding: 12px 20px;
+            border-radius: 8px;
+            font-weight: 700;
+            cursor: pointer;
+            color: #0d0d0f;
+            transition: all 0.2s;
+        }
+
+        .newsletter-form button:hover {
+            background: var(--primary-hover);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 30px;
+            color: #64748b;
+            font-size: 14px;
+        }
+
+        /* Keyframes */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Mobile Responsiveness */
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+            .hero h1 { font-size: 38px; }
+            .cart-drawer { width: 100vw; padding: 20px; }
+            .product-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- ================= NAVBAR ================= -->
+    <header>
+        <nav class="navbar">
+            <a class="logo" href="#home">
+                <div class="logo-icon">👑</div>
+                <span>Royal Taste</span>
+            </a>
+            
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#menu">Menu</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+
+            <div class="nav-right">
+                <div class="clock" id="clock">12:00:00 PM</div>
+                <button class="cart-btn" id="cart-toggle" type="button" aria-label="Open Cart">
+                    🛒 <span>Cart</span> <span id="cart-count">0</span>
+                </button>
+            </div>
+        </nav>
+    </header>
+
+    <!-- ================= MAIN CONTENT ================= -->
+    <main>
+        <!-- HERO SECTION -->
+        <section id="home" class="hero">
+            <div class="hero-content">
+                <p class="small-title">WELCOME TO ROYAL TASTE RESTAURANT</p>
+                <h1>Exquisite Flavors, <br>Unforgettable Dining</h1>
+                <p>Experience culinary perfection with fresh premium ingredients prepared by world-class chefs. Indulge your taste buds today.</p>
+                <a href="#menu" class="btn-primary">Explore Our Menu ↓</a>
+            </div>
+        </section>
+
+        <!-- MENU SECTION -->
+        <section id="menu" class="menu-section">
+            <div class="section-header">
+                <p class="small-title">OUR SPECIAL MENU</p>
+                <h2>Delicious Food Collection</h2>
+                <p>Select your favorite dishes and enjoy top-tier dining delivered to your table.</p>
+            </div>
+
+            <!-- Category Filter Buttons -->
+            <div class="category-filters">
+                <button class="filter-btn active" onclick="filterMenu('all')">All Dishes</button>
+                <button class="filter-btn" onclick="filterMenu('mains')">Main Dishes</button>
+                <button class="filter-btn" onclick="filterMenu('salads')">Starters & Salads</button>
+                <button class="filter-btn" onclick="filterMenu('desserts')">Desserts</button>
+                <button class="filter-btn" onclick="filterMenu('drinks')">Beverages</button>
+            </div>
+
+            <!-- Products Grid -->
+            <div class="product-grid" id="product-grid"></div>
+        </section>
+    </main>
+
+    <!-- ================= FOOTER ================= -->
+    <footer id="contact">
+        <div class="footer-container">
+            <div class="footer-col">
+                <h3>Royal Taste</h3>
+                <p>Bringing people together through exceptional taste, elegant ambiance, and top-tier culinary hospitality.</p>
+                <p style="color: var(--primary-gold); font-weight: 600;">🕒 Opening Hours: 11:00 AM - 11:30 PM</p>
+            </div>
+            
+            <div class="footer-col">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#menu">Our Menu</a></li>
+                    <li><a href="#about">About Our Chefs</a></li>
+                    <li><a href="#contact">Contact & Reservations</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h3>Contact Us</h3>
+                <p>📍 104 Gourmet Avenue, Culinary District</p>
+                <p>📞 +1 (800) 555-ROYAL</p>
+                <p>✉️ order@royaltaste.com</p>
+            </div>
+
+            <div class="footer-col">
+                <h3>Newsletter</h3>
+                <p>Subscribe to receive special offers, new recipe announcements, and event updates.</p>
+                <form id="newsletter-form" class="newsletter-form">
+                    <input type="email" placeholder="Your email address" required>
+                    <button type="submit">Join</button>
+                </form>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            &copy; <span id="year"></span> Royal Taste Restaurant. All Rights Reserved.
+        </div>
+    </footer>
+
+    <!-- ================= SPACIOUS CART DRAWER ================= -->
+    <aside class="cart-drawer" id="cart-drawer" aria-hidden="true">
+        <div class="cart-header">
+            <div class="cart-header-title">
+                <h2>Shopping Cart</h2>
+            </div>
+            <button class="drawer-close" id="cart-close" type="button" aria-label="Close cart">&times;</button>
+        </div>
+
+        <div class="cart-items" id="cart-items">
+            <!-- Dynamic Cart Items Will Render Here -->
+        </div>
+
+        <div class="cart-summary">
+            <div class="summary-row">
+                <span>Subtotal</span>
+                <strong id="cart-subtotal">Rs. 0</strong>
+            </div>
+            <div class="summary-row">
+                <span>Delivery Fee</span>
+                <strong id="cart-delivery">Rs. 150</strong>
+            </div>
+            <div class="summary-row">
+                <span>Estimated Tax (5%)</span>
+                <strong id="cart-tax">Rs. 0</strong>
+            </div>
+            <div class="summary-row grand-total">
+                <span>Grand Total</span>
+                <strong id="cart-grand-total">Rs. 0</strong>
+            </div>
+            <button class="checkout-button" type="button" id="checkout-button">Proceed to Checkout</button>
+        </div>
+    </aside>
+
+    <div class="drawer-backdrop" id="drawer-backdrop"></div>
+
+    <!-- SweetAlert2 JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <!-- JavaScript Application Logic -->
+    <script>
+        // Expanded Menu Items Database (10 Items across 4 categories)
+        const menuItems = [
+            { id: 1, name: "Ribeye Steak with Truffle Butter", category: "mains", price: 1850, image: "https://images.unsplash.com/photo-1544025162-d76694265947?q=80&w=500", description: "Prime beef ribeye grilled to perfection with herb truffle butter." },
+            { id: 2, name: "Grilled Salmon Filet", category: "mains", price: 1650, image: "https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?q=80&w=500", description: "Fresh Atlantic salmon with lemon dill sauce and roasted veggies." },
+            { id: 3, name: "Royal Beef Burger", category: "mains", price: 850, image: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?q=80&w=500", description: "Aged cheddar, caramelized onions, crispy bacon and signature sauce." },
+            { id: 4, name: "Chicken Alfredo Pasta", category: "mains", price: 1100, image: "https://images.unsplash.com/photo-1621996346565-e3d5d6281288?q=80&w=500", description: "Creamy parmesan Alfredo sauce over fettuccine with grilled chicken." },
+            { id: 5, name: "Mediterranean Caesar Salad", category: "salads", price: 550, image: "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?q=80&w=500", description: "Crisp romaine, parmesan shavings, garlic croutons, house dressing." },
+            { id: 6, name: "Avocado & Quinoa Power Bowl", category: "salads", price: 620, image: "https://images.unsplash.com/photo-1540420773420-3366772f4999?q=80&w=500", description: "Fresh avocado, roasted chickpeas, quinoa, cherry tomatoes, tahini." },
+            { id: 7, name: "Belgian Chocolate Lava Cake", category: "desserts", price: 480, image: "https://images.unsplash.com/photo-1606313564200-e75d5e30476c?q=80&w=500", description: "Warm molten center cake served with artisanal vanilla bean gelato." },
+            { id: 8, name: "New York Cheesecake", category: "desserts", price: 520, image: "https://images.unsplash.com/photo-1533134242443-d4fd215305ad?q=80&w=500", description: "Classic creamy cheesecake topped with fresh berry compote." },
+            { id: 9, name: "Fresh Strawberry Mojito", category: "drinks", price: 380, image: "https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?q=80&w=500", description: "Muddled fresh strawberries, mint, lime juice, and sparkling soda." },
+            { id: 10, name: "Iced Caramel Macchiato", category: "drinks", price: 420, image: "https://images.unsplash.com/photo-1461023058943-07fcbe16d735?q=80&w=500", description: "Rich espresso layered with fresh milk and sweet caramel drizzle." }
+        ];
+
+        let cart = [];
+
+        document.addEventListener("DOMContentLoaded", () => {
+            // Set Dynamic Year
+            const yearEl = document.getElementById("year");
+            if (yearEl) yearEl.textContent = new Date().getFullYear();
+
+            // Realtime Clock
+            updateClock();
+            setInterval(updateClock, 1000);
+
+            // Initial Menu Render
+            renderMenu('all');
+
+            // Cart Drawer Controls
+            const cartToggle = document.getElementById("cart-toggle");
+            const cartClose = document.getElementById("cart-close");
+            const cartDrawer = document.getElementById("cart-drawer");
+            const drawerBackdrop = document.getElementById("drawer-backdrop");
+
+            if (cartToggle && cartDrawer && drawerBackdrop) {
+                cartToggle.addEventListener("click", () => {
+                    cartDrawer.classList.add("open");
+                    drawerBackdrop.classList.add("open");
+                    cartDrawer.setAttribute("aria-hidden", "false");
+                });
+            }
+
+            if (cartClose && cartDrawer && drawerBackdrop) {
+                cartClose.addEventListener("click", closeCart);
+                drawerBackdrop.addEventListener("click", closeCart);
+            }
+
+            function closeCart() {
+                cartDrawer.classList.remove("open");
+                drawerBackdrop.classList.remove("open");
+                cartDrawer.setAttribute("aria-hidden", "true");
+            }
+
+            // Checkout Process with SweetAlert2 Modal
+            const checkoutButton = document.getElementById("checkout-button");
+            if (checkoutButton) {
+                checkoutButton.addEventListener("click", () => {
+                    if (cart.length === 0) {
+                        Swal.fire({
+                            title: "Cart is Empty",
+                            text: "Please add some dishes to your cart before proceeding to checkout.",
+                            icon: "warning",
+                            confirmButtonColor: "#d4af37"
+                        });
+                        return;
+                    }
+
+                    const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+                    const delivery = 150;
+                    const tax = Math.round(subtotal * 0.05);
+                    const total = subtotal + delivery + tax;
+
+                    Swal.fire({
+                        title: 'Delivery & Checkout Details',
+                        html: `
+                            <div style="text-align: left; font-size: 14px; margin-top: 10px;">
+                                <p style="margin-bottom: 12px;"><strong>Grand Total:</strong> <span style="color: #ef4444; font-weight: bold; font-size: 16px;">Rs. ${total}</span></p>
+                                <input id="swal-input-name" class="swal2-input" placeholder="Full Name" style="margin: 8px 0; width: 100%;">
+                                <input id="swal-input-phone" class="swal2-input" placeholder="Contact Number" style="margin: 8px 0; width: 100%;">
+                                <textarea id="swal-input-address" class="swal2-textarea" placeholder="Complete Delivery Address" style="margin: 8px 0; width: 100%; height: 80px;"></textarea>
+                            </div>
+                        `,
+                        focusConfirm: false,
+                        showCancelButton: true,
+                        confirmButtonText: 'Confirm Order 🚀',
+                        confirmButtonColor: '#10b981',
+                        cancelButtonText: 'Cancel',
+                        preConfirm: () => {
+                            const name = document.getElementById('swal-input-name').value;
+                            const phone = document.getElementById('swal-input-phone').value;
+                            const address = document.getElementById('swal-input-address').value;
+                            if (!name || !phone || !address) {
+                                Swal.showValidationMessage('Please fill out all required fields!');
+                            }
+                            return { name, phone, address };
+                        }
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            const orderId = 'RT-' + Math.floor(100000 + Math.random() * 900000);
+                            Swal.fire({
+                                title: 'Order Confirmed!',
+                                html: `
+                                    <p>Thank you, <strong>${result.value.name}</strong>!</p>
+                                    <p style="margin-top: 8px;">Order ID: <strong style="color: #d4af37;">${orderId}</strong></p>
+                                    <p style="font-size: 13px; color: #64748b; margin-top: 5px;">Your meal is being prepared and will be delivered shortly.</p>
+                                `,
+                                icon: 'success',
+                                confirmButtonColor: '#d4af37'
+                            }).then(() => {
+                                cart = [];
+                                updateCartUI();
+                                closeCart();
+                            });
+                        }
+                    });
+                });
+            }
+
+            // Newsletter Form Handler
+            const newsletterForm = document.getElementById("newsletter-form");
+            if (newsletterForm) {
+                newsletterForm.addEventListener("submit", (e) => {
+                    e.preventDefault();
+                    Swal.fire({
+                        title: "Subscribed!",
+                        text: "Thank you for joining Royal Taste Newsletter.",
+                        icon: "success",
+                        confirmButtonColor: "#d4af37"
+                    });
+                    newsletterForm.reset();
+                });
+            }
+        });
+
+        // Realtime Clock Function
+        function updateClock() {
+            const clockEl = document.getElementById("clock");
+            if (clockEl) {
+                const now = new Date();
+                clockEl.textContent = now.toLocaleTimeString();
+            }
+        }
+
+        // Render Menu Items
+        function renderMenu(category = 'all') {
+            const grid = document.getElementById("product-grid");
+            if (!grid) return;
+
+            const filteredItems = category === 'all' ? menuItems : menuItems.filter(item => item.category === category);
+
+            grid.innerHTML = filteredItems.map(item => `
+                <div class="product-card">
+                    <div class="product-img-wrap">
+                        <img src="${item.image}" alt="${item.name}">
+                        <span class="badge-category">${item.category.toUpperCase()}</span>
+                    </div>
+                    <div class="product-info">
+                        <h3>${item.name}</h3>
+                        <p>${item.description}</p>
+                        <div class="product-footer">
+                            <span class="product-price">Rs. ${item.price}</span>
+                            <button class="btn-add" onclick="addToCart(${item.id})">
+                                🛒 Add
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `).join("");
+        }
+
+        // Filter Menu Handler
+        function filterMenu(category) {
+            document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            renderMenu(category);
+        }
+
+        // Add Item to Cart
+        function addToCart(id) {
+            const product = menuItems.find(item => item.id === id);
+            if (!product) return;
+
+            const existingItem = cart.find(item => item.id === id);
+            if (existingItem) {
+                existingItem.quantity += 1;
+            } else {
+                cart.push({ ...product, quantity: 1 });
+            }
+
+            updateCartUI();
+
+            const Toast = Swal.mixin({
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 1500,
+                timerProgressBar: true
+            });
+            Toast.fire({
+                icon: 'success',
+                title: `${product.name} added to cart!`
+            });
+        }
+
+        // Change Cart Item Quantity
+        function changeQty(id, delta) {
+            const item = cart.find(i => i.id === id);
+            if (!item) return;
+
+            item.quantity += delta;
+            if (item.quantity <= 0) {
+                cart = cart.filter(i => i.id !== id);
+            }
+            updateCartUI();
+        }
+
+        // Remove Item from Cart
+        function removeFromCart(id) {
+            cart = cart.filter(item => item.id !== id);
+            updateCartUI();
+        }
+
+        // Update Cart Drawer UI & Calculation Summary
+        function updateCartUI() {
+            const cartCount = document.getElementById("cart-count");
+            const cartItemsContainer = document.getElementById("cart-items");
+            const cartSubtotal = document.getElementById("cart-subtotal");
+            const cartTax = document.getElementById("cart-tax");
+            const cartGrandTotal = document.getElementById("cart-grand-total");
+
+            let totalItems = 0;
+            let subtotal = 0;
+
+            if (cartItemsContainer) {
+                if (cart.length === 0) {
+                    cartItemsContainer.innerHTML = `
+                        <div class="empty-cart-view">
+                            <div class="empty-cart-icon">🛒</div>
+                            <h4 style="color: #64748b;">Your cart is currently empty</h4>
+                            <p style="color: #94a3b8; font-size: 13px; margin-top: 5px;">Explore our menu and add delicious meals!</p>
+                        </div>
+                    `;
+                } else {
+                    cartItemsContainer.innerHTML = cart.map(item => {
+                        totalItems += item.quantity;
+                        subtotal += item.price * item.quantity;
+                        return `
+                            <div class="cart-item">
+                                <img src="${item.image}" alt="${item.name}">
+                                <div class="cart-item-details">
+                                    <h4>${item.name}</h4>
+                                    <div class="cart-item-price">Rs. ${item.price * item.quantity}</div>
+                                    <div class="qty-controls">
+                                        <button class="qty-btn" onclick="changeQty(${item.id}, -1)">-</button>
+                                        <span class="qty-value">${item.quantity}</span>
+                                        <button class="qty-btn" onclick="changeQty(${item.id}, 1)">+</button>
+                                    </div>
+                                </div>
+                                <button onclick="removeFromCart(${item.id})" class="remove-item" title="Remove Item">&times;</button>
+                            </div>
+                        `;
+                    }).join("");
+                }
+            }
+
+            const deliveryFee = cart.length > 0 ? 150 : 0;
+            const tax = Math.round(subtotal * 0.05);
+            const grandTotal = subtotal + deliveryFee + tax;
+
+            if (cartCount) cartCount.textContent = totalItems;
+            if (cartSubtotal) cartSubtotal.textContent = `Rs. ${subtotal}`;
+            if (cartTax) cartTax.textContent = `Rs. ${tax}`;
+            if (cartGrandTotal) cartGrandTotal.textContent = `Rs. ${grandTotal}`;
+        }
+    </script>
+</body>
+</html>
